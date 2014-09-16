@@ -13,6 +13,7 @@ public class LoginActivity extends Activity {
 
 
 
+
     protected TextView mSignUpTextView;
 
     @Override
