@@ -106,6 +106,10 @@ public class MyActivity extends FragmentActivity implements ActionBar.TabListene
             ParseUser.logOut();
             navigateToLogin();
         }
+        else if (itemId == R.id.action_edit_friends) {
+            Intent intent = new Intent(this, EditFriendsActivity.class);
+            startActivity(intent);
+        }
         return super.onOptionsItemSelected(item);
     }
 
