@@ -1,7 +1,9 @@
 package com.andrewelliott.dev.ribbit;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
@@ -18,6 +20,23 @@ import com.parse.ParseUser;
 public class MyActivity extends FragmentActivity implements ActionBar.TabListener {
 
     public static final String TAG = MyActivity.class.getSimpleName();
+
+    protected DialogInterface.OnClickListener mDialogListener =
+            new DialogInterface.OnClickListener() {
+                @Override
+                public  void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case 0: //Take pic
+                            break;
+                        case 1: //Take vid
+                            break;
+                        case 2: //Choose pic
+                            break;
+                        case 3: //Choose vid
+                            break;
+                    }
+                }
+            };
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -100,17 +119,23 @@ public class MyActivity extends FragmentActivity implements ActionBar.TabListene
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int itemId = item.getItemId();
-        if (itemId == R.id.action_logout) {
-            ParseUser.logOut();
-            navigateToLogin();
-        }
-        else if (itemId == R.id.action_edit_friends) {
-            Intent intent = new Intent(this, EditFriendsActivity.class);
-            startActivity(intent);
+
+        switch(itemId) {
+            case R.id.action_logout:
+                ParseUser.logOut();
+                navigateToLogin();
+                break;
+            case R.id.action_edit_friends:
+                Intent intent = new Intent(this, EditFriendsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.action_camera:
+                AlertDialog.Builder builder =  new AlertDialog.Builder(this);
+                builder.setItems(R.array.camera_choices, mDialogListener);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
